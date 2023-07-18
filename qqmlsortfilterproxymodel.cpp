@@ -208,11 +208,11 @@ void QQmlSortFilterProxyModel::componentComplete()
 {
     m_completed = true;
 
-    for (const auto& filter : qAsConst(m_filters))
+    for (const auto& filter : m_filters)
         filter->proxyModelCompleted(*this);
-    for (const auto& sorter : qAsConst(m_sorters))
+    for (const auto& sorter : m_sorters)
         sorter->proxyModelCompleted(*this);
-    for (const auto& proxyRole : qAsConst(m_proxyRoles))
+    for (const auto& proxyRole : m_proxyRoles)
         proxyRole->proxyModelCompleted(*this);
 
     invalidate();
@@ -266,7 +266,7 @@ QVariantMap QQmlSortFilterProxyModel::get(int row) const
     QVariantMap map;
     QModelIndex modelIndex = index(row, 0);
     QHash<int, QByteArray> roles = roleNames();
-    for (auto it = roles.cbegin(); it != roles.cend(); ++it)
+    for (QHash<int, QByteArray>::const_iterator it = roles.begin(); it != roles.end(); ++it)
         map.insert(it.value(), data(modelIndex, it.key()));
     return map;
 }
@@ -436,9 +436,8 @@ void QQmlSortFilterProxyModel::updateRoleNames()
     auto roles = m_roleNames.keys();
     auto maxIt = std::max_element(roles.cbegin(), roles.cend());
     int maxRole = maxIt != roles.cend() ? *maxIt : -1;
-    for (auto proxyRole : qAsConst(m_proxyRoles)) {
-        const auto proxyRoleNames = proxyRole->names();
-        for (const auto &roleName : proxyRoleNames) {
+    for (auto proxyRole : m_proxyRoles) {
+        for (auto roleName : proxyRole->names()) {
             ++maxRole;
             m_roleNames[maxRole] = roleName.toUtf8();
             m_proxyRoleMap[maxRole] = {proxyRole, roleName};
@@ -510,7 +509,7 @@ QVariantMap QQmlSortFilterProxyModel::modelDataMap(const QModelIndex& modelIndex
 {
     QVariantMap map;
     QHash<int, QByteArray> roles = roleNames();
-    for (auto it = roles.cbegin(); it != roles.cend(); ++it)
+    for (QHash<int, QByteArray>::const_iterator it = roles.begin(); it != roles.end(); ++it)
         map.insert(it.value(), sourceModel()->data(modelIndex, it.key()));
     return map;
 }
