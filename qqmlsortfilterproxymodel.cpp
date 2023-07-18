@@ -230,8 +230,8 @@ QVariant QQmlSortFilterProxyModel::sourceData(const QModelIndex &sourceIndex, in
     QPair<ProxyRole*, QString> proxyRolePair = m_proxyRoleMap[role];
     if (ProxyRole* proxyRole = proxyRolePair.first)
         return proxyRole->roleData(sourceIndex, *this, proxyRolePair.second);
-    else
-        return sourceModel()->data(sourceIndex, role);
+
+    return sourceModel()->data(sourceIndex, role);
 }
 
 QVariant QQmlSortFilterProxyModel::data(const QModelIndex &index, int role) const

@@ -44,7 +44,7 @@ public:
         RegExp2 = QRegExp::RegExp2,
         WildcardUnix = QRegExp::WildcardUnix,
         W3CXmlSchema11 = QRegExp::W3CXmlSchema11 };
-    Q_ENUMS(PatternSyntax)
+    Q_ENUM(PatternSyntax)
 
     QQmlSortFilterProxyModel(QObject* parent = 0);
 
