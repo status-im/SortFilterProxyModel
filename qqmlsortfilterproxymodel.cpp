@@ -53,30 +53,6 @@ int QQmlSortFilterProxyModel::count() const
 }
 
 /*!
-    \qmlproperty int SortFilterProxyModel::limit
-
-   Limit the total number of results
-*/
-int QQmlSortFilterProxyModel::limit() const
-{
-    return m_limit;
-}
-
-void QQmlSortFilterProxyModel::setLimit(int newLimit)
-{
-    if (m_limit == newLimit)
-        return;
-
-    const auto prevCount = count();
-    m_limit = newLimit;
-    emit limitChanged();
-
-    if (prevCount != count()) {
-        emit countChanged();
-    }
-}
-
-/*!
     \qmlproperty bool SortFilterProxyModel::delayed
 
     Delay the execution of filters, sorters and proxyRoles until the next event loop.
@@ -256,14 +232,6 @@ QVariant QQmlSortFilterProxyModel::sourceData(const QModelIndex &sourceIndex, in
         return proxyRole->roleData(sourceIndex, *this, proxyRolePair.second);
     else
         return sourceModel()->data(sourceIndex, role);
-}
-
-int QQmlSortFilterProxyModel::rowCount(const QModelIndex& parent) const
-{
-    const auto origLimit = QSortFilterProxyModel::rowCount(parent);
-    if (m_limit == -1)
-        return origLimit;
-    return qMin(m_limit, origLimit);
 }
 
 QVariant QQmlSortFilterProxyModel::data(const QModelIndex &index, int role) const
