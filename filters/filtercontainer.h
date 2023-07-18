@@ -3,7 +3,7 @@
 
 #include <QList>
 #include <QQmlListProperty>
-#include <qqml.h>
+#include <QQmlEngine>
 #include <QPointer>
 
 namespace qqsfpm {

@@ -43,7 +43,7 @@ QVariant RangeFilter::minimumValue() const
     return m_minimumValue;
 }
 
-void RangeFilter::setMinimumValue(QVariant minimumValue)
+void RangeFilter::setMinimumValue(const QVariant &minimumValue)
 {
     if (m_minimumValue == minimumValue)
         return;
@@ -92,7 +92,7 @@ QVariant RangeFilter::maximumValue() const
     return m_maximumValue;
 }
 
-void RangeFilter::setMaximumValue(QVariant maximumValue)
+void RangeFilter::setMaximumValue(const QVariant &maximumValue)
 {
     if (m_maximumValue == maximumValue)
         return;
