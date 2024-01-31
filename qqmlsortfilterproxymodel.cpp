@@ -350,10 +350,10 @@ bool QQmlSortFilterProxyModel::lessThan(const QModelIndex& source_left, const QM
 {
     if (m_completed) {
         if (!m_sortRoleName.isEmpty()) {
-            if (QSortFilterProxyModel::lessThan(source_left, source_right))
-                return m_ascendingSortOrder;
-            if (QSortFilterProxyModel::lessThan(source_right, source_left))
-                return !m_ascendingSortOrder;
+            if (m_ascendingSortOrder)
+                return QSortFilterProxyModel::lessThan(source_left, source_right);
+            else
+                return QSortFilterProxyModel::lessThan(source_right, source_left);
         }
         auto sortedSorters = m_sorters;
         std::stable_sort(sortedSorters.begin(),
@@ -364,8 +364,7 @@ bool QQmlSortFilterProxyModel::lessThan(const QModelIndex& source_left, const QM
         for(auto sorter : sortedSorters) {
             if (sorter->enabled()) {
                 int comparison = sorter->compareRows(source_left, source_right, *this);
-                if (comparison != 0)
-                    return comparison < 0;
+                return comparison == -1;
             }
         }
     }

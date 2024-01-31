@@ -107,21 +107,20 @@ void Sorter::setPriority(int priority)
 
 int Sorter::compareRows(const QModelIndex &source_left, const QModelIndex &source_right, const QQmlSortFilterProxyModel& proxyModel) const
 {
-    int comparison = compare(source_left, source_right, proxyModel);
-    return (m_sortOrder == Qt::AscendingOrder) ? comparison : -comparison;
+    if (m_sortOrder == Qt::AscendingOrder)
+        return compare(source_left, source_right, proxyModel);
+    else
+        return compare(source_right, source_left, proxyModel);
 }
 
 int Sorter::compare(const QModelIndex &sourceLeft, const QModelIndex &sourceRight, const QQmlSortFilterProxyModel& proxyModel) const
 {
-    if (lessThan(sourceLeft, sourceRight, proxyModel))
-        return -1;
-    if (lessThan(sourceRight, sourceLeft, proxyModel))
-        return 1;
-    return 0;
+    return lessThan(sourceLeft, sourceRight, proxyModel) ? -1 : 1;
 }
 
 void Sorter::proxyModelCompleted(const QQmlSortFilterProxyModel& proxyModel)
 {
+    m_proxyCompleted = true;
     Q_UNUSED(proxyModel)
 }
 
@@ -135,7 +134,7 @@ bool Sorter::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRi
 
 void Sorter::invalidate()
 {
-    if (m_enabled)
+    if (m_enabled && m_proxyCompleted)
         Q_EMIT invalidated();
 }
 

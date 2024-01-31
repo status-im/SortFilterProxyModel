@@ -48,6 +48,8 @@ int FilterSorter::compare(const QModelIndex& sourceLeft, const QModelIndex& sour
 
 void FilterSorter::proxyModelCompleted(const QQmlSortFilterProxyModel& proxyModel)
 {
+    Sorter::proxyModelCompleted(proxyModel);
+
     for (Filter* filter : qAsConst(m_filters))
         filter->proxyModelCompleted(proxyModel);
 }
