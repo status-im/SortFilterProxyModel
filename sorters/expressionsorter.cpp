@@ -59,7 +59,6 @@ void ExpressionSorter::setExpression(const QQmlScriptString& scriptString)
 
 void ExpressionSorter::proxyModelCompleted(const QQmlSortFilterProxyModel& proxyModel)
 {
-    Sorter::proxyModelCompleted(proxyModel);
     updateContext(proxyModel);
 }
 

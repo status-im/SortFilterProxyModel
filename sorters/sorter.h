@@ -45,14 +45,12 @@ Q_SIGNALS:
 protected:
     virtual int compare(const QModelIndex& sourceLeft, const QModelIndex& sourceRight, const QQmlSortFilterProxyModel& proxyModel) const;
     virtual bool lessThan(const QModelIndex& sourceLeft, const QModelIndex& sourceRight, const QQmlSortFilterProxyModel& proxyModel) const;
-    virtual void invalidate();
+    void invalidate();
 
 private:
     bool m_enabled = true;
     Qt::SortOrder m_sortOrder = Qt::AscendingOrder;
     int m_priority = 0;
-
-    bool m_proxyCompleted = false;
 };
 
 }
