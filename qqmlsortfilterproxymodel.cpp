@@ -399,6 +399,9 @@ void QQmlSortFilterProxyModel::setSourceModel(QAbstractItemModel *sourceModel)
     // SFPM creation or after source model reset it's necessary to re-initialize
     // role names if the source was empty before insertion.
 
+    if (this->sourceModel() == sourceModel)
+        return;
+
     if (auto currentSource = this->sourceModel()) {
         disconnect(currentSource, &QAbstractItemModel::rowsInserted, this,
                    &QQmlSortFilterProxyModel::initRoles);
