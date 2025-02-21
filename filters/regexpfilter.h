@@ -3,6 +3,8 @@
 
 #include "rolefilter.h"
 
+#include <QRegularExpression>
+
 namespace qqsfpm {
 
 class RegExpFilter : public RoleFilter {
@@ -12,16 +14,15 @@ class RegExpFilter : public RoleFilter {
     Q_PROPERTY(Qt::CaseSensitivity caseSensitivity READ caseSensitivity WRITE setCaseSensitivity NOTIFY caseSensitivityChanged)
 
 public:
-    enum PatternSyntax {
-        RegExp = QRegExp::RegExp,
-        Wildcard = QRegExp::Wildcard,
-        FixedString = QRegExp::FixedString,
-        RegExp2 = QRegExp::RegExp2,
-        WildcardUnix = QRegExp::WildcardUnix,
-        W3CXmlSchema11 = QRegExp::W3CXmlSchema11 };
+    enum class PatternSyntax {
+        RegExp,
+        Wildcard,
+        FixedString };
     Q_ENUM(PatternSyntax)
 
     using RoleFilter::RoleFilter;
+
+    RegExpFilter();
 
     QString pattern() const;
     void setPattern(const QString& pattern);
@@ -41,9 +42,11 @@ Q_SIGNALS:
     void caseSensitivityChanged();
 
 private:
-    QRegExp m_regExp;
-    Qt::CaseSensitivity m_caseSensitivity = m_regExp.caseSensitivity();
-    PatternSyntax m_syntax = static_cast<PatternSyntax>(m_regExp.patternSyntax());
+    void updatePattern();
+
+    QRegularExpression m_regExp;
+    Qt::CaseSensitivity m_caseSensitivity;
+    PatternSyntax m_syntax = PatternSyntax::RegExp;
     QString m_pattern = m_regExp.pattern();
 };
 
