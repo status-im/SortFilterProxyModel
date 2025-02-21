@@ -1,7 +1,5 @@
 #include "qvariantlessthan.h"
 
-#include <QDateTime>
-
 namespace qqsfpm {
 
 /*!

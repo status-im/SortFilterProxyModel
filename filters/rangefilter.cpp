@@ -2,9 +2,6 @@
 
 #include "qvariantlessthan.h"
 
-
-
-
 namespace qqsfpm {
 
 /*!
