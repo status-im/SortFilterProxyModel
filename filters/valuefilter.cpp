@@ -52,7 +52,7 @@ void ValueFilter::setValue(const QVariant& value)
 bool ValueFilter::filterRow(const QModelIndex& sourceIndex, const QQmlSortFilterProxyModel& proxyModel) const
 {
     QVariant srcData = sourceData(sourceIndex, proxyModel);
-#if QT_VERSION > QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     // Implicitly convert the types. This was the behavior in Qt5 and makes QML
     // interop much easier, e.g. when comparing QByteArray against QString
     if (srcData.metaType() != m_value.metaType()) {
