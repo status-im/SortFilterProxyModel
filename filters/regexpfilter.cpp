@@ -35,9 +35,10 @@ namespace qqsfpm {
 
     \sa syntax
 */
-RegExpFilter::RegExpFilter() :
-    m_caseSensitivity(m_regExp.patternOptions().testFlag(
-        QRegularExpression::CaseInsensitiveOption) ? Qt::CaseInsensitive : Qt::CaseSensitive)
+RegExpFilter::RegExpFilter(QObject *parent)
+    : RoleFilter(parent), m_caseSensitivity(
+          m_regExp.patternOptions().testFlag(
+              QRegularExpression::CaseInsensitiveOption) ? Qt::CaseInsensitive : Qt::CaseSensitive)
 {
 }
 
