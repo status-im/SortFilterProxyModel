@@ -20,9 +20,7 @@ public:
         FixedString };
     Q_ENUM(PatternSyntax)
 
-    using RoleFilter::RoleFilter;
-
-    RegExpFilter();
+    explicit RegExpFilter(QObject *parent = nullptr);
 
     QString pattern() const;
     void setPattern(const QString& pattern);
