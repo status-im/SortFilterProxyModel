@@ -139,6 +139,8 @@ private:
     bool m_invalidateFilterQueued = false;
     bool m_invalidateQueued = false;
     bool m_invalidateProxyRolesQueued = false;
+
+    QObject* m_qtbug_57971_signalsContext = nullptr;
 };
 
 }
