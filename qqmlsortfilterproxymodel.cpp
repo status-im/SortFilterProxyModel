@@ -316,8 +316,15 @@ int QQmlSortFilterProxyModel::mapFromSource(int sourceRow) const
 
 bool QQmlSortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex& source_parent) const
 {
+    // An incomplete proxy has not had its filters set up yet, so it cannot decide. Passing
+    // every source row through in the meantime makes the proxy transparent for the whole of
+    // QML component construction: anything built in that window (a Repeater, say, which has
+    // no delegate reuse) materialises a delegate per source row and discards it once
+    // componentComplete() invalidates the filter. Exposing nothing instead is the safe half
+    // of that choice — componentComplete() calls invalidate(), so the accepted rows arrive
+    // through the normal path.
     if (!m_completed)
-        return true;
+        return false;
     QModelIndex sourceIndex = sourceModel()->index(source_row, 0, source_parent);
     bool valueAccepted = !m_filterValue.isValid() || ( m_filterValue == sourceModel()->data(sourceIndex, filterRole()) );
     bool baseAcceptsRow = valueAccepted && QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
