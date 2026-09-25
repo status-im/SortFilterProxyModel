@@ -102,8 +102,7 @@ void RegExpFilter::setCaseSensitivity(Qt::CaseSensitivity caseSensitivity)
 
     m_caseSensitivity = caseSensitivity;
     QRegularExpression::PatternOptions patternOptions = m_regExp.patternOptions();
-    if (caseSensitivity == Qt::CaseInsensitive)
-        patternOptions.setFlag(QRegularExpression::CaseInsensitiveOption);
+    patternOptions.setFlag(QRegularExpression::CaseInsensitiveOption, caseSensitivity == Qt::CaseInsensitive);
     m_regExp.setPatternOptions(patternOptions);
     Q_EMIT caseSensitivityChanged();
     invalidate();
