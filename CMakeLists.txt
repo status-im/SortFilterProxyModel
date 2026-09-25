@@ -5,7 +5,7 @@ project(SortFilterProxyModel)
 set(CMAKE_CXX_STANDARD 17)
 
 if (NOT QT_VERSION_MAJOR)
-    set(QT_VERSION_MAJOR 5)
+    set(QT_VERSION_MAJOR 6)
 endif()
 
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS
@@ -43,8 +43,8 @@ add_library(SortFilterProxyModel OBJECT
     proxyroles/joinrole.cpp
     proxyroles/switchrole.cpp
     proxyroles/expressionrole.cpp
-    proxyroles/proxyrolesqmltypes.cpp   
-    proxyroles/singlerole.cpp   
+    proxyroles/proxyrolesqmltypes.cpp
+    proxyroles/singlerole.cpp
     proxyroles/regexprole.cpp
     sorters/filtersorter.cpp
     proxyroles/filterrole.cpp
